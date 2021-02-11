@@ -873,7 +873,7 @@
         "webpack-cli": "^3.3.12"
     },
     "dependencies": {
-        "@azure-tools/azcopy-node": "1.0.0",
+        "@azure-tools/azcopy-node": "1.1.5-beta.3",
         "@azure/arm-storage": "^15.0.0",
         "@azure/storage-blob": "^12.1.1",
         "@azure/storage-file-share": "^12.1.1",
