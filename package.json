@@ -861,7 +861,7 @@
         "webpack-cli": "^4.6.0"
     },
     "dependencies": {
-        "@azure-tools/azcopy-node": "1.0.0",
+        "@azure-tools/azcopy-node": "^2.2.0",
         "@azure/arm-storage": "^15.0.0",
         "@azure/arm-storage-profile-2020-09-01-hybrid": "^1.0.0",
         "@azure/storage-blob": "^12.1.1",
