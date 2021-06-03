@@ -32,7 +32,7 @@ suite('Deploy', function (this: Mocha.Suite): void {
         const createdAccount: StorageAccount = await webSiteClient.storageAccounts.getProperties(resourceName, resourceName);
         const webUrl: string | undefined = (<StorageAccountTreeItem>await ext.tree.findTreeItem(<string>createdAccount.id, context)).root.primaryEndpoints?.web;
         const client: ServiceClient = await createGenericClient();
-        await validateWebSite(webUrl, client, 60 * 1000, 1000);
+        await validateWebSite(webUrl, client, 180 * 1000, 1000);
     })
 });
 
