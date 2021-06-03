@@ -60,10 +60,11 @@ async function validateWebSite(webUrl: string | undefined, client: ServiceClient
     // eslint-disable-next-line no-constant-condition
     while (true) {
         response = await client.sendRequest({ method: 'GET', url: webUrl });
-        if (Date.now() > endTime || response.status == 200) {
-            break;
+        if (response.bodyAsText?.includes('Hello World!')) {
+            assert.ok(true);
+        } else if (Date.now() > endTime) {
+            assert.fail();
         }
         await delay(pollingMs);
     }
-    assert.ok(response.bodyAsText && response.bodyAsText.includes('Hello World!'));
 }
