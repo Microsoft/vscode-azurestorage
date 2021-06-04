@@ -65,7 +65,16 @@ async function validateWebSite(webUrl: string | undefined, client: ServiceClient
                 break;
             }
         } catch (error) {
-            console.log(JSON.stringify(error));
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            console.log(error?.status);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            console.log(error?.bodyAsText);
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            if (error?.status === 404 && /websitedisabled/i.test(error?.bodyAsText)) {
+                // ignore
+            } else {
+                throw error;
+            }
         }
 
         await delay(pollingMs);
