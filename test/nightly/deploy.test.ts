@@ -32,7 +32,6 @@ suite('Deploy', function (this: Mocha.Suite): void {
         const createdAccount: StorageAccount = await webSiteClient.storageAccounts.getProperties(resourceName, resourceName);
         const webUrl: string | undefined = (<StorageAccountTreeItem>await ext.tree.findTreeItem(<string>createdAccount.id, context)).root.primaryEndpoints?.web;
         const client: ServiceClient = await createGenericClient();
-        console.log('Before validate website');
         await validateWebSite(webUrl, client, 60 * 1000, 1000);
     })
 });
@@ -58,21 +57,18 @@ function getWorkspacePath(testWorkspaceName: string): string {
 async function validateWebSite(webUrl: string | undefined, client: ServiceClient, maximumValidationMs: number, pollingMs: number) {
     const endTime: number = Date.now() + maximumValidationMs;
     let response: HttpOperationResponse;
-    console.log('Before while loop');
     // eslint-disable-next-line no-constant-condition
     while (true) {
-        console.log('Before send request');
-        response = await client.sendRequest({ method: 'GET', url: webUrl });
-        console.log('---------------------');
-        console.log('status:');
-        console.log(response.status);
-        console.log('headers:');
-        console.log(response.headers);
-        if (response.bodyAsText?.includes('Hello World!')) {
-            assert.ok(true);
-        } else if (Date.now() > endTime) {
-            assert.fail();
+        try {
+            response = await client.sendRequest({ method: 'GET', url: webUrl });
+            if (Date.now() > endTime || response.status == 200) {
+                break;
+            }
+        } catch {
+            // ignore
         }
+
         await delay(pollingMs);
     }
+    assert.ok(response.bodyAsText && response.bodyAsText.includes('Hello World!'));
 }
