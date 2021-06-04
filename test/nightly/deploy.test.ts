@@ -61,6 +61,7 @@ async function validateWebSite(webUrl: string | undefined, client: ServiceClient
     console.log('Before while loop');
     // eslint-disable-next-line no-constant-condition
     while (true) {
+        console.log('Before send request');
         response = await client.sendRequest({ method: 'GET', url: webUrl });
         console.log('---------------------');
         console.log('status:');
