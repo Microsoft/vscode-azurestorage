@@ -32,6 +32,7 @@ suite('Deploy', function (this: Mocha.Suite): void {
         const createdAccount: StorageAccount = await webSiteClient.storageAccounts.getProperties(resourceName, resourceName);
         const webUrl: string | undefined = (<StorageAccountTreeItem>await ext.tree.findTreeItem(<string>createdAccount.id, context)).root.primaryEndpoints?.web;
         const client: ServiceClient = await createGenericClient();
+        console.log('Before validate website');
         await validateWebSite(webUrl, client, 60 * 1000, 1000);
     })
 });
@@ -57,6 +58,7 @@ function getWorkspacePath(testWorkspaceName: string): string {
 async function validateWebSite(webUrl: string | undefined, client: ServiceClient, maximumValidationMs: number, pollingMs: number) {
     const endTime: number = Date.now() + maximumValidationMs;
     let response: HttpOperationResponse;
+    console.log('Before while loop');
     // eslint-disable-next-line no-constant-condition
     while (true) {
         response = await client.sendRequest({ method: 'GET', url: webUrl });
