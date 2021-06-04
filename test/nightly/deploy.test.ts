@@ -64,8 +64,8 @@ async function validateWebSite(webUrl: string | undefined, client: ServiceClient
             if (Date.now() > endTime || response.status == 200) {
                 break;
             }
-        } catch {
-            // ignore
+        } catch (error) {
+            console.log(JSON.stringify(error));
         }
 
         await delay(pollingMs);
