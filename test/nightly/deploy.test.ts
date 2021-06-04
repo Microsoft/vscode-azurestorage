@@ -66,11 +66,11 @@ async function validateWebSite(webUrl: string | undefined, client: ServiceClient
             }
         } catch (error) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            console.log(error?.status);
+            console.log(error?.statusCode);
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            console.log(error?.bodyAsText);
+            console.log(error?.body);
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            if (error?.status === 404 && /websitedisabled/i.test(error?.bodyAsText)) {
+            if (error?.statusCode === 404 && /websitedisabled/i.test(error?.body)) {
                 // ignore
             } else {
                 throw error;
