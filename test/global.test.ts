@@ -12,7 +12,7 @@ export const testUserInput: TestUserInput = new TestUserInput(vscode);
 
 // Runs before all tests
 suiteSetup(async function (this: Mocha.Context): Promise<void> {
-    this.timeout(120 * 1000);
+    this.timeout(800 * 1000);
     await vscode.commands.executeCommand('azureStorage.refresh'); // activate the extension before tests begin
     ext.ui = testUserInput;
 });
