@@ -13,7 +13,7 @@ import { longRunningTestsEnabled, testUserInput } from '../global.test';
 import { resourceGroupsToDelete, webSiteClient } from './global.resource.test';
 
 suite('Deploy', function (this: Mocha.Suite): void {
-    this.timeout(3 * 60 * 1000);
+    this.timeout(800 * 1000);
 
     suiteSetup(function (this: Mocha.Context): void {
         if (!longRunningTestsEnabled) {
