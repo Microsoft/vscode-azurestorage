@@ -13,7 +13,7 @@ import { longRunningTestsEnabled, testUserInput } from '../global.test';
 import { resourceGroupsToDelete, webSiteClient } from './global.resource.test';
 
 suite('Deploy', function (this: Mocha.Suite): void {
-    this.timeout(800 * 1000);
+    this.timeout(3 * 60 * 1000);
 
     suiteSetup(function (this: Mocha.Context): void {
         if (!longRunningTestsEnabled) {
@@ -32,9 +32,7 @@ suite('Deploy', function (this: Mocha.Suite): void {
         const createdAccount: StorageAccount = await webSiteClient.storageAccounts.getProperties(resourceName, resourceName);
         const webUrl: string | undefined = (<StorageAccountTreeItem>await ext.tree.findTreeItem(<string>createdAccount.id, context)).root.primaryEndpoints?.web;
         const client: ServiceClient = await createGenericClient();
-        console.log('00000000000000000000000000');
-        console.log(webUrl);
-        await validateWebSite(webUrl, client, 600 * 1000, 1000);
+        await validateWebSite(webUrl, client, 60 * 1000, 1000);
     })
 });
 
@@ -62,6 +60,11 @@ async function validateWebSite(webUrl: string | undefined, client: ServiceClient
     // eslint-disable-next-line no-constant-condition
     while (true) {
         response = await client.sendRequest({ method: 'GET', url: webUrl });
+        console.log('---------------------');
+        console.log('status:');
+        console.log(response.status);
+        console.log('headers:');
+        console.log(response.headers);
         if (response.bodyAsText?.includes('Hello World!')) {
             assert.ok(true);
         } else if (Date.now() > endTime) {
